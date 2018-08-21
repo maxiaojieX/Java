@@ -115,4 +115,11 @@ static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	}
 ```
 
+<br>
+<h3>BigDecimal转换四舍五入</h2>
+
+```java
+Long deviceAmount = *****;
+BigDecimal deviceAmountBigDecimal = BigDecimal.valueOf(deviceAmount).setScale(2,BigDecimal.ROUND_HALF_UP);
+```
 
