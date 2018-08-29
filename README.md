@@ -33,6 +33,27 @@ public static String getUserIP(HttpServletRequest request) {
 
 ```java
 static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+
+/**
+	 * 将时间从源时区转为指定时区
+	 * @param time
+	 * @param sourceTimeZone
+	 * @param toTimeZone
+	 * @return
+	 */
+	public static String dateTransformBetweenTimeZone(String time,DateFormat sourceDateFormat,TimeZone sourceTimeZone,DateFormat toDateFormat,TimeZone toTimeZone) {
+		sourceDateFormat.setTimeZone(sourceTimeZone);
+		try {
+			Date date = sourceDateFormat.parse(time);
+			toDateFormat.setTimeZone(toTimeZone);
+			return toDateFormat.format(date);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
+
 	/**
 	 * 获取当年的第一天
 	 * @return
