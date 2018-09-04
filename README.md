@@ -28,8 +28,39 @@ public static String getUserIP(HttpServletRequest request) {
 		return ip != null ? ip.trim() : "";
 	}
 ```
+
 <br>
-<h3>获取当年/月 时间范围</h2>
+<h3>获取当前服务器IP</h2>
+
+```java
+public static String getAddress()  {
+        String local = null;
+        try {
+            Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+            InetAddress ip = null;
+            while (allNetInterfaces.hasMoreElements()) {
+                NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
+                if (netInterface.isLoopback() || netInterface.isVirtual() || !netInterface.isUp()) {
+                    continue;
+                } else {
+                    Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+                    while (addresses.hasMoreElements()) {
+                        ip = addresses.nextElement();
+                        if (ip != null && ip instanceof Inet4Address) {
+                            local = ip.getHostAddress();
+                        }
+                    }
+                }
+            }
+        }catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return local;
+    }
+```
+
+<br>
+<h3>时间Util</h2>
 
 ```java
 static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
