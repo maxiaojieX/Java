@@ -175,3 +175,36 @@ Long deviceAmount = *****;
 BigDecimal deviceAmountBigDecimal = BigDecimal.valueOf(deviceAmount).setScale(2,BigDecimal.ROUND_HALF_UP);
 ```
 
+<br>
+<h3>利用反射优雅执行大量set、get方法</h2>
+
+```java
+<!--拿到某个类的所有方法集，放到Map中-->
+Method[] methods = UserValue.class.getMethods();
+Map<String, Method> methodMap = new HashMap<String, Method>();
+for (Method method : methods) {
+	methodMap.put(method.getName(), method);
+}
+
+<!--for循环构建方法名并获取方法-->
+for(int i = 1;i<=16;i++) {
+	String setRateMethodName = "setUSER_PAYMENT_RATE_"+i+"_WEEK";
+	String setArpuMethodName = "setUSER_PAYMENT_ARPU_"+i+"_WEEK";
+	String setArppuMethodName = "setUSER_PAYMENT_ARPPU_"+i+"_WEEK";
+
+	//获取付费率方法
+	Method setRateMethod = methodMap.get(setRateMethodName);
+	//获取Arpu方法
+	Method setArpuMethod = methodMap.get(setArpuMethodName);
+	//获取Arppu方法
+	Method setArppuMethod = methodMap.get(setArppuMethodName);
+
+	//执行方法
+	setRateMethod.invoke();
+	setArpuMethod.invoke();
+	setArppuMethod.invoke();
+}
+
+
+
+```
